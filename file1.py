@@ -1,2 +1,3 @@
-for i in range(11):
-    print(f"{i} is een mooi getal")
+zin = "Dit is een zin"
+print(zin.center(30), end="")
+print("lol")
