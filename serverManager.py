@@ -54,7 +54,7 @@ def main():
             server_to_ping = input("Welke server wil je pingen?\n")
             server_status = myping3(server_to_ping)
             print(server_status)
-            servernames_and_status.append({server_to_ping: server_status})
+            servernames_and_status.append(f"{server_to_ping}: {server_status}")
             with open("pingresults.json", "w") as p:
                 json.dump(servernames_and_status, p)
         else:
@@ -73,12 +73,25 @@ def main():
         server_to_ping = sys.argv[2]
         server_status = myping3(server_to_ping)
         print(server_status)
-        servernames_and_status.append({server_to_ping: server_status})
+        servernames_and_status.append(f"{server_to_ping}: {server_status}")
         with open("pingresults.json", "w") as p:
             json.dump(servernames_and_status, p)
 
     with open("serverlijst.json", "w") as j:
         json.dump(server_lijst, j)
+
+    # Write ping data to HTML file
+    with open("index.html", "w") as h:
+        with open("pingresults.json", "r") as p:
+            checks = json.load(p)
+            h.write('<!DOCTYPE html><html lang="en"><head>\
+<meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="\
+IE=edge"><meta name="viewport" content="width=device-width, \
+initial-scale=1.0"><title>Document</title></head><body>')
+            for item in checks:
+                h.write(item)
+                h.write("<br>")
+            h.write('</body></html>')
 
 
 if __name__ == "__main__":
